@@ -1,0 +1,1 @@
+{"success":true,"message":"Dashboard data retrieved successfully","data":{"period":{"date_from":"2026-09-21","date_to":"2026-09-21"},"ca":0,"recouvrement":0,"achats":0,"reglement_fournisseurs":0,"solde_total_clients":-7022442.7,"solde_total_fournisseurs":-835917101.92,"achats_en_attente_validation":0,"commandes_en_attente_validation":0},"errors":{}}

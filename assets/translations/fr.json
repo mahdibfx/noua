@@ -1,0 +1,149 @@
+{
+  "common": {
+    "back": "Retour",
+    "see_detail": "Voir le détail",
+    "validate": "Valider",
+    "refuse": "Refuser",
+    "cancel": "Annuler",
+    "pending": "En attente",
+    "history": "Historique",
+    "empty_pending": "Aucun document en attente de validation",
+    "empty_history": "Aucun document dans l'historique",
+    "required": "Champ obligatoire",
+    "retry": "Réessayer",
+    "empty_list": "Aucun document",
+    "date": "Date",
+    "created_by": "Créé par"
+  },
+  "status": {
+    "enAttente": "En attente",
+    "enCours": "En cours",
+    "partielle": "Partielle",
+    "validee": "Validée",
+    "annulee": "Annulée",
+    "inconnu": "—",
+    "enTraitement": "En traitement",
+    "commandee": "Commandée",
+    "receptionne": "Réceptionné"
+  },
+  "nav": {
+    "home": "Accueil",
+    "purchases": "Achats",
+    "orders": "Commandes",
+    "payments": "Paiements",
+    "profile": "Profil"
+  },
+  "login": {
+    "title": "Espace manager",
+    "subtitle": "Connectez-vous avec les identifiants fournis",
+    "username": "Identifiant",
+    "username_hint": "nom.utilisateur",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "footer": "Pas de création de compte : accès fourni par l'administrateur."
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "day": "Jour",
+    "week": "Semaine",
+    "month": "Mois",
+    "custom": "Perso.",
+    "revenue": "CA",
+    "collections": "Recouvrement",
+    "purchases": "Achats",
+    "supplier_payments": "Règl. fournisseurs",
+    "customers_balance": "Solde total clients",
+    "suppliers_balance": "Solde total fournisseurs",
+    "pending_validation": "En attente de validation",
+    "pending_purchases": {
+      "zero": "Aucun achat",
+      "one": "{} achat",
+      "other": "{} achats"
+    },
+    "pending_orders": {
+      "zero": "Aucune commande",
+      "one": "{} commande",
+      "other": "{} commandes"
+    }
+  },
+  "purchase_requests": {
+    "title": "Demandes d'achat",
+    "requester": "Demandeur",
+    "site": "Site",
+    "type": "Type",
+    "items_title": "Articles demandés",
+    "requested": "Demandée",
+    "ordered": "Commandée",
+    "remaining": "Restée",
+    "beb": "BEB",
+    "needed_at": "Date besoin"
+  },
+  "purchase_orders": {
+    "title": "Bons de commande",
+    "ttc": "{} TTC",
+    "supplier": "Fournisseur",
+    "service": "Service",
+    "payment_mode": "Mode règlement",
+    "delivery_date": "Date livraison",
+    "items_title": "Articles commandés",
+    "ordered": "Commandée",
+    "delivered": "Livrée",
+    "remaining": "Restée",
+    "unit_price": "Prix unitaire",
+    "total_ttc": "Total TTC"
+  },
+  "payment_requests": {
+    "title": "Demandes de paiement",
+    "subtitle": "Consultation uniquement",
+    "supplier": "Fournisseur",
+    "operation": "Opération",
+    "mode": "Mode",
+    "billing": "Facturation",
+    "invoice_number": "N° facture",
+    "created_by": "Créé par",
+    "total_amount": "Montant total",
+    "empty": "Aucune demande de paiement",
+    "observation": "Observation",
+    "operations": "Opérations",
+    "type": "Type"
+  },
+  "validation": {
+    "validate_title": "Valider {} ?",
+    "refuse_title": "Refuser {} ?",
+    "validate_description": "Le document sera marqué comme validé.",
+    "refuse_description": "Le document sera marqué comme refusé.",
+    "validated": "{} validée",
+    "refused": "{} refusée"
+  },
+  "profile": {
+    "role": "Accès manager",
+    "change_password": "Changer le mot de passe",
+    "current_password": "Mot de passe actuel",
+    "new_password": "Nouveau mot de passe",
+    "confirm_password": "Confirmer le nouveau mot de passe",
+    "submit": "Mettre à jour le mot de passe",
+    "logout": "Se déconnecter",
+    "too_short": "8 caractères minimum",
+    "mismatch": "Les mots de passe ne correspondent pas",
+    "updated": "Mot de passe mis à jour"
+  },
+  "errors": {
+    "no_internet": "Pas de connexion internet",
+    "timeout": "Le serveur met trop de temps à répondre",
+    "cancel": "Requête annulée",
+    "unknown": "Une erreur est survenue",
+    "bad_certificate": "Certificat de sécurité invalide",
+    "forbidden": "Vous n'avez pas les droits nécessaires",
+    "not_found": "Élément introuvable",
+    "validation": "Données invalides",
+    "server": "Erreur serveur",
+    "session_expired": "Session expirée, reconnectez-vous"
+  },
+  "priority": {
+    "1": "Basse",
+    "2": "Normale",
+    "3": "Haute",
+    "4": "Urgente",
+    "long": "Priorité {}"
+  }
+}
