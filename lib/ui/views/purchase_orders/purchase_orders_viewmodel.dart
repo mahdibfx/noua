@@ -17,7 +17,7 @@ class PurchaseOrdersViewModel extends BaseViewModel {
   bool get isPendingTab => tabIndex == 0;
   List<String> get tabLabels => ['common.pending'.tr(), 'common.history'.tr()];
 
-  List<CommandOrder> get orders => _all.where((e) => e.status.isPending == isPendingTab).toList();
+  List<CommandOrder> get orders => _all.where((e) => e.isActionable == isPendingTab).toList();
 
   Future<void> init() async {
     setBusy(true);

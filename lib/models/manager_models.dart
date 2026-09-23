@@ -20,8 +20,8 @@ enum DocStatus {
   static DocStatus fromCode(int? code) =>
       DocStatus.values.firstWhere((e) => e.code == code, orElse: () => DocStatus.inconnu);
 
-  /// Only "En cours" can be validated or refused (decision 21/09/2026); it is
-  /// also what the "En attente" tab lists, so the tab and the buttons agree.
+  /// Demandes d'achat: only "En cours" can be validated or refused
+  /// (decision 21/09/2026) — also what their "En attente" tab lists.
   bool get isPending => this == enCours;
 
   String get label => 'status.$name'.tr();
@@ -161,6 +161,15 @@ class CommandOrder {
   final String createdBy;
   final List<DocumentProduct> products;
   DocStatus status;
+
+  /// Backend rules (Yanis, 22/09/2026): validate only "Partielle", cancel only
+  /// "En cours" (and "Satisfait" — status code still unknown, see
+  /// BACKEND_QUESTIONS).
+  bool get canValidate => status == DocStatus.partielle;
+  bool get canCancel => status == DocStatus.enCours;
+
+  /// What the "En attente" tab lists — same set as `?status=en_attente`.
+  bool get isActionable => canValidate || canCancel;
 
   factory CommandOrder.fromJson(Map<String, dynamic> json) {
     final code = pickStringOrNull(json, ['supplier_code']);

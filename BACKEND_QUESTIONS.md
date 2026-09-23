@@ -1,64 +1,51 @@
 # Retours backend — app Noua (manager)
 
-Testé le 21/09/2026 sur `https://demo.smartvision-dz.com` avec `admin`.
+Dernier test : 23/09/2026 sur `https://demo.smartvision-dz.com` (admin).
 
-## ✅ Vérifié, OK
+## ✅ Corrigé / vérifié
 
-- Login, profil, dashboard, les 3 listes et les 3 détails répondent HTTP 200.
-- Le bug du token (`exp` == `iat`) est corrigé.
-- Les champs des détails (produits, opérations, totaux) sont lus correctement
-  par l'app (tests automatiques sur les vraies réponses).
+- Token : plus de `exp == iat`, les endpoints authentifiés répondent.
+- Statut liste vs détail : 0 écart sur les 31 DA et les 17 BC.
+- Encodage : `billed` renvoie bien « facturé ».
+- `commandes_en_attente_validation` : 4 (avant 15) — cohérent avec En cours + Partielle.
+- Champs des détails (produits, opérations, totaux) : lus par l'app, tests OK.
 
-## À corriger / à répondre
+## Règles appliquées côté app (Yanis, 22/09/2026)
 
-0. **Statut différent entre la liste et le détail des demandes d'achat.**
-   Sur 28 des 31 DA, `GET /api/purchase-orders` renvoie le statut effectif
-   (7 En traitement, 8 Commandée, 0 Réceptionné) alors que
-   `GET /api/purchase-orders/detail/{id}` renvoie `status_code: 1` (En cours).
-   Exemple : DA00021/2026 → liste « En traitement », détail « En cours ».
-   Les bons de commande et demandes de paiement n'ont pas ce problème.
-   → Le détail doit renvoyer le même statut effectif que la liste.
-   (En attendant, l'app garde le statut de la liste.)
+- **Demandes d'achat** : Valider / Refuser uniquement si statut 1 (En cours).
+  L'API accepte n'importe quel statut, mais l'app ne propose pas l'action
+  ailleurs (décision produit).
+- **Bons de commande** : Valider uniquement si « Partielle » (4),
+  Refuser uniquement si « En cours » (1).
 
-1. **Le token n'expire plus jamais.** Le JWT n'a plus de claim `exp` et
-   `expires_at` vaut `null`. Un token volé reste valable à vie. Merci de
-   remettre `exp` avec une vraie durée (ex. 30 jours) et la même valeur dans
-   `expires_at`.
+## Reste à faire / à répondre
 
-2. **Statuts des demandes d'achat ≠ la doc.** La doc parle de 6 (En attente),
-   1 (En cours), 2 (Validée), 3 (Annulée). Les vraies données contiennent aussi
-   7 (En traitement, 23 DA), 8 (Commandée, 5 DA) et 0 (Réceptionné, 1 DA).
-   `?status=en_attente` renvoie 0 résultat.
-   → Quels statuts le manager peut-il **valider / refuser** ? L'app affiche
-   aujourd'hui les boutons pour 6 et 1 seulement.
+1. **`status_code` de « Satisfait » (bons de commande) ?** Yanis indique que
+   l'annulation est possible sur « En cours » et « Satisfait », mais ce statut
+   n'apparaît ni dans la doc ni dans les données de démo. L'app n'autorise
+   donc l'annulation que sur « En cours » pour l'instant.
 
-3. **Les compteurs du dashboard ne correspondent pas aux listes.**
-   Sur 01/09 → 21/09 : `achats_en_attente_validation` = 1 mais la liste des
-   demandes d'achat en attente = 0 ; `commandes_en_attente_validation` = 15
-   mais la liste des bons de commande en attente = 6. D'après la doc, le
-   premier compte des `purchase_operation` et le second inclut les commandes
-   commerciales. Dans l'app, ces boutons ouvrent les listes Demandes d'achat
-   et Bons de commande → le manager verra des chiffres différents.
-   → Soit aligner les compteurs sur ces listes, soit nous dire à quoi ils
-   correspondent.
+2. **Le token n'expire toujours jamais.** Le JWT n'a pas de claim `exp` et
+   `expires_at` vaut `null`. Merci de remettre une vraie durée (ex. 30 jours).
 
-4. ~~**Priorité des demandes d'achat.**~~ Libellés choisis côté app :
-   1 Basse, 2 Normale, 3 Haute, 4 Urgente (cohérent avec la maquette).
+3. **`achats_en_attente_validation` ne correspond pas à la liste.**
+   Sur 01 → 23/09 le dashboard renvoie 3, alors que
+   `GET /api/purchase-orders?status=en_cours` ne renvoie qu'une seule DA
+   (DA00022/2026). Le compteur devrait compter les demandes d'achat au statut
+   1 (En cours) sur la période — c'est ce que le bouton ouvre dans l'app.
 
-5. **Encodage cassé** : dans `/api/payment-requests`, `billed` vaut
-   `"facturÃ©"` au lieu de `"facturé"` (UTF-8 encodé deux fois).
+4. **Filtre par dates sur les listes.** Pouvez-vous ajouter `date_from` /
+   `date_to` à `/api/purchase-orders` et `/api/command-orders` ? Le bouton du
+   dashboard ouvrirait alors exactement les documents comptés.
 
-6. **`operations` n'a pas le même format dans la liste et le détail** des
-   demandes de paiement : objet avec des chaînes jointes par `<br>` dans la
-   liste, tableau d'objets dans le détail. L'app n'utilise que le détail ;
-   le format de la liste peut être aligné ou retiré.
+5. **`cancel_reason`** est-il obligatoire pour annuler un bon de commande ?
+   L'app envoie `action: cancel` + `restore_related_demands: true`, sans motif.
 
-7. **Valider / Refuser.** Côté mobile, « Refuser » envoie
-   `{"action":"cancel"}` (statut 3 Annulée). Confirmez-vous ? Pour les bons de
-   commande, `cancel_reason` est-il obligatoire ?
-   Ces actions n'ont **pas** été testées pour ne pas modifier les données de
-   la démo : pouvez-vous nous indiquer une DA et un BC de test qu'on peut
-   valider/annuler ?
+6. **Documents de test** : une DA « En cours » et un BC « Partielle » qu'on
+   peut valider/annuler sur la démo sans gêner ?
 
-8. **Pagination** : l'app charge tout (31 DA, 17 BC, 11 DP sur la démo).
-   Quel volume en production ?
+7. **Soldes négatifs** : `solde_total_clients` et `solde_total_fournisseurs`
+   sont négatifs. C'est normal ? L'app les affiche tels quels.
+
+8. **`operations` (demandes de paiement)** : objet avec chaînes `<br>` dans la
+   liste, tableau d'objets dans le détail. L'app n'utilise que le détail.

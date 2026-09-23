@@ -26,10 +26,10 @@ class PurchaseOrderDetailsView extends StackedView<PurchaseOrderDetailsViewModel
       title: o.reference,
       onBack: viewModel.onBack,
       badges: [StatusPill.status(o.status, apiLabel: o.statusLabel)],
-      bottom: viewModel.isPending
+      bottom: o.isActionable
           ? ValidationActions(
-              onValidate: viewModel.onValidateTap,
-              onRefuse: viewModel.onRefuseTap,
+              onValidate: o.canValidate ? viewModel.onValidateTap : null,
+              onRefuse: o.canCancel ? viewModel.onRefuseTap : null,
               isBusy: viewModel.isBusy,
             )
           : null,

@@ -17,8 +17,6 @@ class PurchaseOrderDetailsViewModel extends BaseViewModel with DocumentDecision 
   CommandOrder _order;
   CommandOrder get order => _order;
 
-  bool get isPending => _order.status.isPending;
-
   Future<void> init() async {
     setBusy(true);
     final result = await _managerService.fetchCommandOrder(_order.id);

@@ -73,19 +73,37 @@ class DetailScaffold extends StatelessWidget {
 
 /// Valider / Refuser pair.
 class ValidationActions extends StatelessWidget {
-  const ValidationActions({super.key, required this.onValidate, required this.onRefuse, this.isBusy = false});
+  /// A null callback means the action is not allowed for this status — the
+  /// button is left out rather than disabled.
+  const ValidationActions({super.key, this.onValidate, this.onRefuse, this.isBusy = false});
 
-  final VoidCallback onValidate;
-  final VoidCallback onRefuse;
+  final VoidCallback? onValidate;
+  final VoidCallback? onRefuse;
   final bool isBusy;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: CustomButton.filled(onPressed: onValidate, text: 'common.validate'.tr(), color: AppColors.greenColor, isLoading: isBusy)),
-        const SizedBox(width: 8),
-        Expanded(child: CustomButton.filled(onPressed: isBusy ? null : onRefuse, text: 'common.refuse'.tr(), color: AppColors.redColor)),
+        if (onValidate != null)
+          Expanded(
+            child: CustomButton.filled(
+              onPressed: onValidate,
+              text: 'common.validate'.tr(),
+              color: AppColors.greenColor,
+              isLoading: isBusy,
+            ),
+          ),
+        if (onValidate != null && onRefuse != null) const SizedBox(width: 8),
+        if (onRefuse != null)
+          Expanded(
+            child: CustomButton.filled(
+              onPressed: isBusy ? null : onRefuse,
+              text: 'common.refuse'.tr(),
+              color: AppColors.redColor,
+              isLoading: isBusy && onValidate == null,
+            ),
+          ),
       ],
     );
   }

@@ -26,14 +26,7 @@ class PurchaseRequestDetailsViewModel extends BaseViewModel with DocumentDecisio
     setBusy(false);
     result.fold(
       (failure) => _snackbarService.showSnackbar(message: failure.message, duration: const Duration(seconds: 3)),
-      // The detail endpoint returns the raw header status (almost always 1,
-      // "En cours") while the list returns the effective one (7 En traitement,
-      // 8 Commandée…). Keep the list's status so the screen matches the list and
-      // Valider/Refuser don't show on DAs already being processed.
-      // ponytail: drop once backend aligns the detail status (BACKEND_QUESTIONS #0).
-      (detail) => _request = detail
-        ..status = _request.status
-        ..statusLabel = _request.statusLabel,
+      (detail) => _request = detail,
     );
   }
 
