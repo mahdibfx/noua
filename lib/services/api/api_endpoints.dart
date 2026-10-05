@@ -1,6 +1,6 @@
 /// Central registry of API routes. All paths are relative to [base].
 class ApiEndpoints {
-  static const String base = 'https://demo.smartvision-dz.com';
+  static const String base = 'https://acquadinoua.smartvision-dz.com';
 
   // Auth & profile
   static const String login = '/api/auth/login';
