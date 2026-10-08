@@ -21,6 +21,10 @@ class ApiEndpoints {
   static String commandOrder(Object id) => '/api/command-orders/detail/$id';
   static String commandOrderStatus(Object id) => '/api/command-orders/status/$id';
 
+  // Retraits (décaissements)
+  static const String retraits = '/api/retraits';
+  static String retrait(Object id) => '/api/retraits/detail/$id';
+
   // Demandes de paiement
   static const String paymentRequests = '/api/payment-requests';
   static String paymentRequest(Object id) => '/api/payment-requests/detail/$id';

@@ -90,6 +90,8 @@ class HomeView extends StackedView<HomeViewModel> {
                   ),
                 ),
                 verticalSpace(8),
+                MetricTile(label: 'dashboard.withdrawals'.tr(), value: formatDa(stats.withdrawals, round: true)),
+                verticalSpace(8),
                 BalanceCard(
                   label: 'dashboard.customers_balance'.tr(),
                   value: formatDa(stats.customersBalance, round: true),

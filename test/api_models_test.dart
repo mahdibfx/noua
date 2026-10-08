@@ -46,10 +46,23 @@ void main() {
         ('REC-MAT00018/2026', 'A terme', 'Achat', '00012', 5680584));
   });
 
+  test('retrait detail', () {
+    final r = Retrait.fromJson(_data('retrait_detail'));
+    expect(r.id, 60);
+    expect(r.reference, 'RETR00060/2026');
+    expect(r.amount, 315000);
+    expect(r.treasury, "CAISSE BUREAU D'ALGER");
+    expect(r.partner, 'EURL KRIKROU');
+    expect(r.chargeAccount, '63110 – Traitements et Salaires');
+    expect(r.imputationAccount, 'DIRECTION GENERALE');
+    expect(r.designation, 'salaire eurl krikrou 09-2026');
+  });
+
   test('dashboard', () {
     final s = DashboardStats.fromJson(_data('dashboard'));
     expect(s.customersBalance, lessThan(0));
     expect(s.pendingOrders, isA<int>());
+    expect(s.withdrawals, greaterThan(0));
   });
 
   test('missing status_code is unknown, not "Réceptionné" (0)', () {

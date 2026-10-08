@@ -15,6 +15,7 @@ class BottomTabBar extends StatelessWidget {
     (Icons.shopping_cart_outlined, Icons.shopping_cart, 'nav.purchases'),
     (Icons.receipt_long_outlined, Icons.receipt_long, 'nav.orders'),
     (Icons.payments_outlined, Icons.payments, 'nav.payments'),
+    (Icons.account_balance_wallet_outlined, Icons.account_balance_wallet, 'nav.retraits'),
     (Icons.person_outline, Icons.person, 'nav.profile'),
   ];
 
@@ -47,13 +48,14 @@ class BottomTabBar extends StatelessWidget {
                           child: Icon(
                             i == currentIndex ? _tabs[i].$2 : _tabs[i].$1,
                             key: ValueKey(i == currentIndex),
-                            size: 22,
+                            size: 20,
                             color: i == currentIndex ? AppColors.primaryColor : AppColors.secondaryColor,
                           ),
                         ),
                         const SizedBox(height: 2),
-                        CustomText.caption(
-                          text: _tabs[i].$3.tr(),
+                        CustomText(
+                          _tabs[i].$3.tr(),
+                          fontSize: 9.5,
                           textAlign: TextAlign.center,
                           fontWeight: i == currentIndex ? FontWeight.w600 : FontWeight.w400,
                           textColor: i == currentIndex ? AppColors.primaryColor : AppColors.secondaryColor,

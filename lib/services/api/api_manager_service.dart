@@ -79,6 +79,29 @@ class ApiManagerService {
     return ApiResponse<Unit>.fromJson(asMap(res.data), res.statusCode!, (_) => unit);
   }
 
+  // --- Retraits ---
+
+  Future<ApiResponse<List<Retrait>>> fetchRetraits({String? dateFrom, String? dateTo}) async {
+    final res = await _dio.get(ApiEndpoints.retraits, queryParameters: {
+      'date_from': ?dateFrom,
+      'date_to': ?dateTo,
+    });
+    return ApiResponse<List<Retrait>>.fromJson(
+      asMap(res.data),
+      res.statusCode!,
+      (data) => asMapList(data).map(Retrait.fromJson).toList(),
+    );
+  }
+
+  Future<ApiResponse<Retrait>> fetchRetrait(int id) async {
+    final res = await _dio.get(ApiEndpoints.retrait(id));
+    return ApiResponse<Retrait>.fromJson(
+      asMap(res.data),
+      res.statusCode!,
+      (data) => Retrait.fromJson(asMap(data)),
+    );
+  }
+
   // --- Demandes de paiement ---
 
   Future<ApiResponse<List<PaymentRequest>>> fetchPaymentRequests({String? status}) async {

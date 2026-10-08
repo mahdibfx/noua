@@ -35,6 +35,7 @@ class DashboardStats {
     required this.collections,
     required this.purchases,
     required this.supplierPayments,
+    required this.withdrawals,
     required this.customersBalance,
     required this.suppliersBalance,
     required this.pendingPurchaseRequests,
@@ -45,6 +46,8 @@ class DashboardStats {
   final double collections;
   final double purchases;
   final double supplierPayments;
+  /// Retraits (décaissements) — total cashout over the period.
+  final double withdrawals;
   final double customersBalance;
   final double suppliersBalance;
   final int pendingPurchaseRequests;
@@ -55,6 +58,7 @@ class DashboardStats {
         collections: pickDouble(json, ['recouvrement']),
         purchases: pickDouble(json, ['achats']),
         supplierPayments: pickDouble(json, ['reglement_fournisseurs']),
+        withdrawals: pickDouble(json, ['retraits']),
         customersBalance: pickDouble(json, ['solde_total_clients']),
         suppliersBalance: pickDouble(json, ['solde_total_fournisseurs']),
         pendingPurchaseRequests: pickInt(json, ['achats_en_attente_validation']),
@@ -302,5 +306,56 @@ class DocumentProduct {
       unitPrice: pickDouble(json, ['price', 'fprice']),
       neededAt: pickStringOrNull(json, ['date_needed']),
     );
+  }
+}
+
+/// Retrait (décaissement) — `/api/retraits`.
+class Retrait {
+  const Retrait({
+    required this.id,
+    required this.reference,
+    required this.date,
+    required this.time,
+    required this.amount,
+    required this.treasury,
+    required this.partner,
+    required this.category,
+    required this.chargeAccount,
+    required this.imputationAccount,
+    required this.designation,
+  });
+
+  final int id;
+  final String reference;
+  final String date;
+  final String time;
+  final double amount;
+  final String treasury;
+  final String partner;
+  final String category;
+  final String chargeAccount;
+  final String? imputationAccount;
+  final String designation;
+
+  factory Retrait.fromJson(Map<String, dynamic> json) => Retrait(
+        id: pickInt(json, ['id']),
+        reference: pickString(json, ['reference', 'code']),
+        date: pickString(json, ['date']),
+        time: pickString(json, ['time']),
+        amount: pickDouble(json, ['amount', 'montant']),
+        treasury: pickString(json, ['treasury_name', 'treasury_code']).replaceAll(RegExp(r'\s+'), ' ').trim(),
+        partner: pickString(json, ['partner_name']),
+        category: pickString(json, ['cashout_category_label', 'cashout_category_name']),
+        chargeAccount: _account(json, 'charge_account'),
+        imputationAccount: pickStringOrNull(json, ['imputation_account_label', 'imputation_account_name']),
+        designation: pickString(json, ['designation']),
+      );
+
+  /// "63110 – Traitements et Salaires" when both parts are present.
+  static String _account(Map<String, dynamic> json, String prefix) {
+    final name = pickString(json, ['${prefix}_name']);
+    final label = pickString(json, ['${prefix}_label']);
+    if (name.isEmpty || label.isEmpty || name == label) return name.isEmpty ? label : name;
+    return '$name – $label';
   }
 }

@@ -31,7 +31,8 @@
     "purchases": "Achats",
     "orders": "Commandes",
     "payments": "Paiements",
-    "profile": "Profil"
+    "profile": "Profil",
+    "retraits": "Retraits"
   },
   "login": {
     "title": "Espace manager",
@@ -64,7 +65,8 @@
       "zero": "Aucune commande",
       "one": "{} commande",
       "other": "{} commandes"
-    }
+    },
+    "withdrawals": "Retraits"
   },
   "purchase_requests": {
     "title": "Demandes d'achat",
@@ -145,5 +147,17 @@
     "3": "Haute",
     "4": "Urgente",
     "long": "Priorité {}"
+  },
+  "retraits": {
+    "title": "Retraits",
+    "subtitle": "Décaissements",
+    "empty": "Aucun retrait",
+    "treasury": "Trésorerie",
+    "partner": "Partenaire",
+    "category": "Catégorie",
+    "charge_account": "Compte de charge",
+    "imputation_account": "Imputation",
+    "designation": "Désignation",
+    "amount": "Montant"
   }
 }

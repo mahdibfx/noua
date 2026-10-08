@@ -35,6 +35,11 @@ class ManagerService {
   Future<Either<Failure, Unit>> setCommandOrderStatus(int id, {required String action}) =>
       _api.setCommandOrderStatus(id, action: action).toEither();
 
+  Future<Either<Failure, List<Retrait>>> fetchRetraits({String? dateFrom, String? dateTo}) =>
+      _api.fetchRetraits(dateFrom: dateFrom, dateTo: dateTo).toEither();
+
+  Future<Either<Failure, Retrait>> fetchRetrait(int id) => _api.fetchRetrait(id).toEither();
+
   Future<Either<Failure, List<PaymentRequest>>> fetchPaymentRequests({String? status}) =>
       _api.fetchPaymentRequests(status: status).toEither();
 

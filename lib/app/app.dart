@@ -8,6 +8,8 @@ import 'package:noua/ui/views/main/main_view.dart';
 import 'package:noua/ui/views/payment_request_details/payment_request_details_view.dart';
 import 'package:noua/ui/views/purchase_order_details/purchase_order_details_view.dart';
 import 'package:noua/ui/views/purchase_request_details/purchase_request_details_view.dart';
+import 'package:noua/ui/views/retrait_details/retrait_details_view.dart';
+import 'package:noua/ui/views/retraits/retraits_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 // @stacked-import
@@ -19,6 +21,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: PurchaseRequestDetailsView),
     MaterialRoute(page: PurchaseOrderDetailsView),
     MaterialRoute(page: PaymentRequestDetailsView),
+    MaterialRoute(page: RetraitsView),
+    MaterialRoute(page: RetraitDetailsView),
 // @stacked-route
   ],
   dependencies: [
